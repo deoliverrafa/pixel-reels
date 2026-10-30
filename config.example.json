@@ -1,0 +1,21 @@
+{
+  "handle": "@seuperfil",
+  "cta_falado": "Segue o perfil arroba seu perfil",
+  "serie": "DICAS DE IA",
+  "idioma": "pt-BR",
+  "pasta_entrega": "~/Documents/videos",
+  "voz": {
+    "voice_id": "COLE_AQUI_O_ID_DA_VOZ",
+    "modelo": "eleven_v3",
+    "stability": 1.0,
+    "similarity": 0.8,
+    "arquivo_chave": "~/.elevenlabs_key",
+    "pronuncia": { "Claude": "Clóde" }
+  },
+  "estilo": {
+    "shadow": "#141413", "cream": "#f0eee6", "creamShade": "#d8d1bf", "creamLight": "#e8e4d8",
+    "accent": "#d97757", "accentDark": "#b85c3e", "accentLight": "#e89676",
+    "ink": "#2a2826", "mute": "#8f8770",
+    "bgDeep": "#1f1e1d", "bg": "#262624", "bgEdge": "#1a1918", "spot": "#3a2a22", "spotMid": "#2b2522"
+  }
+}

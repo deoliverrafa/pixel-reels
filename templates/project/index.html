@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Press Start 2P";src:url("assets/fonts/PressStart2P-latin.woff2") format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Silkscreen";src:url("assets/fonts/Silkscreen-400.woff2") format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Silkscreen";src:url("assets/fonts/Silkscreen-700.woff2") format("woff2");font-weight:700;font-display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden}
+#c{position:absolute;inset:0;width:1080px;height:1920px;image-rendering:pixelated}
+.fl{position:absolute;left:0;top:0;font-size:20px;opacity:0.01}
+.fl.a{font-family:"Press Start 2P"}.fl.b{font-family:"Silkscreen";font-weight:700}.fl.c{font-family:"Silkscreen";font-weight:400}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="__DURATION__" data-width="1080" data-height="1920">
+  <canvas id="c" width="1080" height="1920"></canvas>
+  <span class="fl a">ABC ?!%@</span><span class="fl b">ÁÃÇÉÊÍÓÕÚ abc</span><span class="fl c">ÁÃÇÉ abc</span>
+</div>
+<script src="assets/style.js"></script>
+<script src="assets/timing.js"></script>
+<script src="assets/characters.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/scene.js"></script>
+<script>
+const P = { t: 0 };
+const tl = gsap.timeline({ paused: true });
+tl.to(P, { t: __DURATION__, duration: __DURATION__, ease: "none", onUpdate: () => { window.renderScene && window.renderScene(P.t); } }, 0);
+window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl;
+window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {};
+window.__hf.buildReady.fonts = Promise.all([
+  document.fonts.load('40px "Press Start 2P"'), document.fonts.load('700 40px "Silkscreen"'), document.fonts.load('400 40px "Silkscreen"')
+]).then(() => { window.renderScene(P.t); });
+</script>
+</body>
+</html>
