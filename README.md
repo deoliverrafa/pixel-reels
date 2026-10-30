@@ -72,6 +72,53 @@ Clone só a sua própria voz ou a de alguém que autorizou. Ao postar, ative o r
 - **Agentes:** instruções em `references/agents/`
 - **Regras de estilo, áudio e capa:** `references/`
 
+## Problemas comuns
+
+**`Falta instalar: node` (ou `ffmpeg`, `ffprobe`, `python3`)**
+O `setup.sh` não achou o programa no PATH. O `ffprobe` vem junto com o `ffmpeg`. Instale e rode o setup de novo:
+
+```bash
+brew install node ffmpeg python            # macOS
+sudo apt install nodejs ffmpeg python3     # Ubuntu/Debian
+```
+
+**`Precisa do Node 22 ou mais novo`**
+O Node instalado é antigo (o do `apt` costuma ser). Instale uma versão nova pelo [nvm](https://github.com/nvm-sh/nvm) e abra um terminal novo:
+
+```bash
+nvm install 22 && nvm alias default 22
+```
+
+**`Permission denied` ao rodar o `setup.sh`**
+O arquivo perdeu a permissão de execução. Rode com `bash ~/.claude/skills/pixel-reels/scripts/setup.sh`.
+
+**`ensurepip is not available` ou erro ao criar o `.venv`**
+No Ubuntu/Debian o módulo de ambientes virtuais vem separado. Instale com `sudo apt install python3-venv`, apague a pasta `.venv` da skill e rode o setup de novo.
+
+**Erro no `pip install` do `faster-whisper`**
+Normalmente é falta de internet ou uma versão do Python nova demais para as bibliotecas dele. Confira a conexão; se persistir, use o Python 3.12, apague o `.venv` e rode o setup de novo.
+
+**`ModuleNotFoundError: No module named 'numpy'`**
+O script rodou com o `python3` do sistema em vez do `.venv`. Os scripts `words.py`, `mix_audio.py` e `sfx_bed.py` precisam de `.venv/bin/python`. Se o `.venv` não existir, rode o setup.
+
+**`Chrome não encontrado. Instale o Google Chrome.`**
+Os scripts procuram o Chrome em `/Applications/Google Chrome.app` (macOS) ou pelos comandos `google-chrome`, `chromium`, `chromium-browser` e `chrome`. No Linux, confira se um deles responde no terminal (por exemplo, `google-chrome --version`).
+
+**A skill não aparece no Claude Code**
+A pasta precisa estar em `~/.claude/skills/pixel-reels`, com o `SKILL.md` direto dentro dela. Se você clonou em outro lugar, mova a pasta e reinicie o Claude Code.
+
+**O `npx hyperframes` trava ou falha na primeira renderização**
+O HyperFrames é baixado na hora do primeiro uso, então precisa de internet. Se der erro de cache do npm, rode `npm cache verify` e tente de novo.
+
+**`JSONDecodeError` ao rodar qualquer script**
+O `~/.config/pixel-reels/config.json` tem um erro de digitação, como vírgula sobrando ou aspas faltando. Valide com `python3 -m json.tool ~/.config/pixel-reels/config.json`.
+
+**`Configure voz.voice_id` ou erro `401` do ElevenLabs**
+Só acontece se você usa narração com a sua voz. Coloque o ID da voz em `voz.voice_id` e confira se a chave em `~/.elevenlabs_key` está certa e sem espaços extras. O erro `429` significa limite de requisições do plano; o script já espera e tenta de novo sozinho.
+
+**`pbpaste: command not found`**
+O `pbpaste` só existe no macOS. No Linux, use `xclip -o -selection clipboard > ~/.elevenlabs_key` ou cole a chave num editor, e depois rode `chmod 600 ~/.elevenlabs_key`.
+
 ## Limites
 
 - Os vídeos são animados por código, então cada vídeo consome uso do Claude Code. Vídeos com vários agentes consomem bem mais do que uma conversa comum.
